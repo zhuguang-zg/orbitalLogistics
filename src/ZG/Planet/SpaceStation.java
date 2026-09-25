@@ -10,7 +10,9 @@ import mindustry.type.Sector;
 import mindustry.type.SectorPreset;
 import mindustry.world.meta.Env;
 
+import static ZG.Block.block.blocks.floorRemover;
 import static ZG.Block.block.blocks.spaceCore;
+import static ZG.Block.floor.floors.spacefloor;
 import static mindustry.Vars.*;
 
 public class SpaceStation {
@@ -29,13 +31,17 @@ public class SpaceStation {
                 generator = new AsteroidGenerator();
             }};
             stations.put(p, station);
+            p.updateGroup.add(station);
+            station.defaultCore = spaceCore;
             String mapName = mods.getMod(OrbitalLogistics.class).name + "-station";
             SectorPreset preset = new SectorPreset(p.name, mapName, station, 0);
             maps.put(p, preset);
             preset.overrideLaunchDefaults = true;
             preset.allowLaunchLoadout = false;
             preset.allowLaunchSchematics = false;
-            station.defaultCore = spaceCore;
+
+            spacefloor.shownPlanets.add(station);
+            floorRemover.shownPlanets.add(station);
         }
     }
 }
